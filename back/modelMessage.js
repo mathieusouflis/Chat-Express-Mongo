@@ -3,10 +3,7 @@ import mongoose from "mongoose";
 
 // Définir le schéma mongoose pour un message de chat
 const messageSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-  },
+  
   name: {
     type: String,
     required: true,
@@ -33,11 +30,7 @@ const messageValidation = Joi.object({
   id: Joi.string()
     .required()
     .messages({
-      'string.empty': 'L\'ID est obligatoire',
-    }),
-  name: Joi.string()
-    .required()
-    .messages({
+        
       'string.empty': 'Le nom est obligatoire',
     }),
   message: Joi.string()
