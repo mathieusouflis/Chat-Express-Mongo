@@ -1,32 +1,61 @@
 import Joi from "joi";
 import mongoose from "mongoose";
 
-const filmSchema = new mongoose.Schema({
-  titre: {
+// Définir le schéma mongoose pour un message de chat
+const messageSchema = new mongoose.Schema({
+  id: {
     type: String,
     required: true,
-    lowercase: true
   },
-  annee: {
-    type: Number
+  name: {
+    type: String,
+    required: true,
+  },
+  message: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: String,
+    required: true,
+  },
+  heure: {
+    type: String,
+    required: true,
   }
-})
+});
 
-const Film = mongoose.model('Film', filmSchema)
+// Créer un modèle basé sur le schéma
+const Message = mongoose.model('Message', messageSchema);
 
-const filmValidation = Joi.object({
-  titre: Joi.string()
+// Validation avec Joi
+const messageValidation = Joi.object({
+  id: Joi.string()
     .required()
     .messages({
-      'string.empty': 'Le titre du film est obligatoire'
+      'string.empty': 'L\'ID est obligatoire',
     }),
-  annee: Joi.number()
-    .min(1921)
+  name: Joi.string()
     .required()
     .messages({
-      'number.base': 'L\'année doit etre un nombre',
-      'number.min': 'L\'année doit être supérieur à 1921'
-    })
-})
+      'string.empty': 'Le nom est obligatoire',
+    }),
+  message: Joi.string()
+    .required()
+    .messages({
+      'string.empty': 'Le message est obligatoire',
+    }),
+  date: Joi.string()
+    .required()
+    .messages({
+      'string.empty': 'La date est obligatoire',
+    }),
+  heure: Joi.string()
+    .required()
+    .messages({
+      'string.empty': 'L\'heure est obligatoire',
+    }),
+});
 
-export { Film, filmValidation }
+// Exporter le modèle et la fonction de validation
+export { Message, messageValidation };
