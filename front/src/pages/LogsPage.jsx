@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { io } from "socket.io-client";
 
 const LogsPage = () => {
   const [logs, setLogs] = useState([]);
@@ -7,7 +6,7 @@ const LogsPage = () => {
   useEffect(() => {
     const fetchLogs = async () => {
         try {
-            const response = await fetch("http://localhost:3001/logs");
+            const response = await fetch("http://localhost:4865/logs");
             const data = await response.json();
             setLogs(data);
         } catch (error) {
