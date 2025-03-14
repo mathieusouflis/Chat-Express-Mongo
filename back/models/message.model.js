@@ -30,7 +30,6 @@ const messageValidation = Joi.object({
   name: Joi.string()
     .required()
     .messages({
-        
       'string.empty': 'Le nom est obligatoire',
     }),
   message: Joi.string()

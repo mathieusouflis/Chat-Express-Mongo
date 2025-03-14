@@ -17,3 +17,9 @@ export const deleteMessage = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la suppression du log' });
     }
 }
+
+export const getAllMessages = async (req, res ) => {
+    const messages = await Message.find();
+    if(!messages) return res.status(404).send("Messages not found")
+    res.send(messages);
+}
