@@ -1,10 +1,10 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import connectDB from './dbConnect.js'
+import connectDB from './db/connectDB.js'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
 
-import sendMessage from './sendMessage.js'
+import sendMessageHandler from './routes/sendMessagehandler.js'
 
 dotenv.config()
 connectDB()
@@ -19,14 +19,14 @@ const io = new Server(server, {
 
 app.use(express.json())
 
+io.use(sendMessageHandler)
+
 io.on('connection', (socket) => {
   console.log('Un client s\'est connecté');
 
-  sendMessage(socket, io);
-
-    socket.on('disconnect', () => {
-      console.log('Un client s\'est déconnecté');
-    });
+  socket.on('disconnect', () => {
+    console.log('Un client s\'est déconnecté');
+  });
 });
 
 const port = process.env.PORT || 4865;
