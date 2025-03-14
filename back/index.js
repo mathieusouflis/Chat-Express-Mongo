@@ -1,11 +1,13 @@
-//Import des modules utile
 import express from 'express';
 import { Server } from 'socket.io'; 
 import dotenv from "dotenv";
+import connectDB from './db/connectDB.js'
 import MessageRouter from "./routes/messages.route.js";
+import sendMessageHandler from './routes/sendMessagehandler.js'
 
-//lancement du serveur web
 dotenv.config();
+connectDB()
+
 const app = express();
 const PORT = process.env.PORT || 4865;
 const server = app.listen(PORT, () => console.log(`server running on port ${PORT}`));
@@ -20,25 +22,28 @@ const server = app.listen(port, () => {
 
 
 
-const io = new Server(server) ;
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  }
+}) ;
+
+io.use(sendMessageHandler);
+
 let userConnected = new Set();
 
-
-//Fonction qui affiche le nombre d'utilisateur connecté
 function userEvent(socket){
-    console.log(socket.id); //Affiche le socket id dans la console
+    console.log(socket.id);
     
-//Lorsqu'un utilisateur se connecte, son socket id est ajouté au nombre d'utilisateur connecté 
     userConnected.add(socket.id);
     io.emit('total_user', userConnected.size)
 
-//Lorsqu'un utilisateur se déconnecte, son socket id est supprimé du nombre d'utilisateur connecté
     socket.on('disconnect', () =>{
         userConnected.delete(socket.id);
         io.emit('total_user', userConnected.size)
 
     })
 }
-
 
 io.on('connection', userEvent);
