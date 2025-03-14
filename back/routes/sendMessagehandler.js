@@ -1,23 +1,22 @@
 
-
+import { Message } from "../model/modelMessage.js";
 // Gère l'envoi d'un message par un utilisateur, le stock dans la base de données et l'envoie à tous les utilisateurs connectés
-
 const sendMessageHandler = (socket, next) => {
-    socket.on('sendMessage', async (data) => {
-        if (!data || !data.name || !data.message || !data.date || !data.heure) {
+    socket.on('sendMessage', async (Message) => {
+        if (!Message || !Message.name || !Message.message || !Message.date || !Message.heure) {
         console.log('Données manquantes');
         return;
         }
         
         try {
         const messageData = {
-            id: data.id,
-            name: data.name,
-            message: data.message,
-            date: data.date,
-            heure: data.heure,
+            id: Message.id,
+            name: Message.name,
+            message: Message.message,
+            date: Message.date,
+            heure: Message.heure,
         } 
-        const newMessage = new messageData(data);
+        const newMessage = new messageData(Message);
         await newMessage.save();
         socket.broadcast.emit('message', messageData);
     }
