@@ -4,25 +4,25 @@
 
 const sendMessageHandler = (socket, next) => {
     socket.on('sendMessage', async (data) => {
-        if (!data || !data.id || !data.name || !data.message || !data.date || !data.heure) {
-        console.error('Données manquantes');
-        return next(new Error('Données manquantes'));
+        if (!data || !data.name || !data.message || !data.date || !data.heure) {
+        console.log('Données manquantes');
+        return;
         }
         
         try {
-        const Message = {
+        const messageData = {
             id: data.id,
             name: data.name,
             message: data.message,
             date: data.date,
             heure: data.heure,
         } 
-        const newMessage = new Message(Message);
+        const newMessage = new messageData(data);
         await newMessage.save();
-        socket.broadcast.emit('newMessage', newMessage);
+        socket.broadcast.emit('message', messageData);
     }
         catch (error) {
-        console.error('Erreur lors de l\'envoi du message :', error);
+        console.log('Erreur lors de l\'envoi du message :', error);
         }
         next();
     });
