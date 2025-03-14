@@ -2,13 +2,22 @@
 import express from 'express';
 import { Server } from 'socket.io'; 
 import dotenv from "dotenv";
-
+import MessageRouter from "./routes/messages.route.js";
 
 //lancement du serveur web
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4865;
 const server = app.listen(PORT, () => console.log(`server running on port ${PORT}`));
+
+app.use(express.json());
+app.use(MessageRouter);
+
+const server = app.listen(port, () => {
+  console.log(`Serveur lancé sur http://localhost:${port}`);
+});
+
+
 
 
 const io = new Server(server) ;
