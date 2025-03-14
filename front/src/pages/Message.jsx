@@ -10,7 +10,7 @@ const MessagePage = () => {
             setMessages((old) => [...old, data])
         })
 
-        return socket.off("message")
+        socket.off("message")
     }, [socket])
 
     const handleMessage = (e) => {  
