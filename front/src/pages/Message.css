@@ -1,0 +1,20 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-self: center;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .message {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
