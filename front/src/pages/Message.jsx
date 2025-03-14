@@ -16,20 +16,22 @@ const MessagePage = () => {
     const handleMessage = (e) => {  
         e.preventDefault()
 
-        const username = e.target[0].value
-        const message = e.target[1].value
+        const username = e.target[0].value.trim()
+        const message = e.target[1].value.trim()
         const now = new Date()
         
-        const data = {
-            username,
-            message,
-            date: now.getDate(),
-            hours: now.getTime()
+        if(username !== "" && message !== ""){
+            const data = {
+                username,
+                message,
+                date: now.getDate(),
+                hours: now.getTime()
+            }
+            
+            setMessages((old) => [...old, data])
+            
+            socket.emit("message", data)
         }
-        
-        setMessages((old) => [...old, data])
-        
-        socket.emit("message", data)
         
         e.target[1].value = ""
     }
