@@ -27,7 +27,7 @@ const Message = mongoose.model('Message', messageSchema);
 
 // Validation avec Joi
 const messageValidation = Joi.object({
-  id: Joi.string()
+  name: Joi.string()
     .required()
     .messages({
         
