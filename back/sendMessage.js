@@ -1,4 +1,4 @@
-// Gère l'neovi d'un message dans la base de données
+// Gère l'neovi d'un message par un utilisateur
 
 const sendMessage = (socket, io) => {
 socket.on('sendMessage', ({ username, message }) => {
