@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import "./Message.css";
+
 
 const MessagePage = () => {
     const [messages, setMessages] = useState([])
@@ -39,18 +41,22 @@ const MessagePage = () => {
     return (
         <>
         <form onSubmit={handleMessage}>
-            <label htmlFor="username">Username</label>
-            <input type="text" name="username" id="username" />
+            <div className="form-section">
+                <label htmlFor="username">Username</label>
+                <input type="text" name="username" id="username" />
+            </div>
             {
-                messages.map((message) => <div>
+                messages.map((message) => <div className="message">
                     <span>{message.name}</span>
                     <p>{message.message}</p>
                     <p>{message.date} {message.hours}</p>
                 </div>)
             }
-            <label htmlFor="message">Message</label>
-            <input type="text" name="message" id="message" />
-            <input type="submit" value="Send" />
+            <div className="form-section">
+                <label htmlFor="message">Message</label>
+                <input type="text" name="message" id="message" />
+                <input type="submit" value="Send" />
+            </div>
         </form>
         </>
     )
