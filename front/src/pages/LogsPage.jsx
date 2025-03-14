@@ -5,19 +5,28 @@ const LogsPage = () => {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-
-    const socket = io("http://localhost:4865");
-
-
-    socket.on("logs", (data) => {
-      setLogs(data); 
-    });
-
-
-    return () => {
-      socket.disconnect();
+    const fetchLogs = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/logs");
+            const data = await response.json();
+            setLogs(data);
+        } catch (error) {
+            console.log("Erreur lors de la récupération des logs :", error);
+        }
     };
-  }, []);
+    fetchLogs();
+    }, []);
+
+    const deleteLog = async (id) => {
+        try {
+            await fetch(`http://localhost:4865/logs/${id}`, {
+                method: "DELETE",
+            });
+            setLogs(logs.filter((log) => log.id !== id));
+        } catch (error) {
+            console.log("Erreur lors de la suppression du log :", error);
+        }
+    }
 
   return (
     <div>
@@ -28,6 +37,7 @@ const LogsPage = () => {
             <span>
               {log.date} {log.heure} - {log.name} : {log.message}
             </span>
+            <button onClick={() => deleteLog(log.id)}>Supprimer</button>
           </li>
         ))}
       </ul>
