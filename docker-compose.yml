@@ -22,7 +22,7 @@ services:
       - ./back:/app
       - /app/node_modules
     environment:
-      - MONGO_URL=mongodb://mongo:27017
+      - DB=mongodb://mongo:27017
     depends_on:
       - mongo
 
