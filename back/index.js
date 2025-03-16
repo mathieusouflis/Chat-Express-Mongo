@@ -1,10 +1,11 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import cors from 'cors'
 import connectDB from './db/connectDB.js'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
 
-import sendMessageHandler from './routes/sendMessagehandler.js'
+import logsRoutes from './routes/logs.js'
 
 dotenv.config()
 connectDB()
@@ -13,13 +14,14 @@ const server = createServer(app)
 const io = new Server(server, {
   cors: {
     origin: '*',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'DELETE'],
   }
 });
-
+app.use(cors())
 app.use(express.json())
 
-io.use(sendMessageHandler)
+app.use(logsRoutes)
+
 
 io.on('connection', (socket) => {
   console.log('Un client s\'est connecté');

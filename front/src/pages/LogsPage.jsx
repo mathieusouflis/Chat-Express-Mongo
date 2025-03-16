@@ -21,7 +21,7 @@ const LogsPage = () => {
             await fetch(`http://localhost:4865/logs/${id}`, {
                 method: "DELETE",
             });
-            setLogs(logs.filter((log) => log.id !== id));
+            setLogs(logs.filter((log) => log._id !== id));
         } catch (error) {
             console.log("Erreur lors de la suppression du log :", error);
         }
@@ -32,11 +32,11 @@ const LogsPage = () => {
       <h1>Logs des messages</h1>
       <ul>
         {logs.map((log) => (
-          <li key={log.id}>
+          <li key={log._id}>
             <span>
               {log.date} {log.heure} - {log.name} : {log.message}
             </span>
-            <button onClick={() => deleteLog(log.id)}>Supprimer</button>
+            <button onClick={() => deleteLog(log._id)}>Supprimer</button>
           </li>
         ))}
       </ul>
