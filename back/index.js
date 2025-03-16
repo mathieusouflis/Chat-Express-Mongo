@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { Server } from 'socket.io'; 
 import dotenv from "dotenv";
 import connectDB from './db/connectDB.js'
@@ -8,12 +9,13 @@ import { sendMessageHandler } from './services/socket.service.js';
 dotenv.config();
 connectDB()
 
-const app = express({
-    cors: {
-      origin: '*',
-      methods: ['GET', 'POST'],
-    }
-});
+
+const app = express();
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'DELETE'],
+}));
+
 const PORT = process.env.PORT || 4865;
 
 app.use(express.json());
@@ -26,7 +28,7 @@ const server = app.listen(PORT, () => {
 const io = new Server(server, {
   cors: {
     origin: '*',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'DELETE'],
   }
 }) ;
 

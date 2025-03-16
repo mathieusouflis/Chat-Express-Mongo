@@ -35,7 +35,7 @@ const MessagePage = () => {
                 name,
                 message,
                 date: `${now.getDay()}/${now.getMonth()}/${now.getFullYear()}`,
-                heure: `${now.getHours}:${now.getMinutes}:${now.getSeconds}`
+                heure: `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
             }
             
             setMessages((old) => [...old, data])
@@ -67,6 +67,7 @@ const MessagePage = () => {
                 <input type="submit" value="Send" className="button" />
             </div>
         </form>
+        <a href="http://localhost:5173/la-fameuse-page-des-supers-logs-fait-par-laurent">La page des logs</a>
         </div>
     )
 }
