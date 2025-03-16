@@ -6,8 +6,13 @@ const LogsPage = () => {
   useEffect(() => {
     const fetchLogs = async () => {
         try {
-            const response = await fetch("http://localhost:4865/logs");
-            const data = await response.json();
+            const response = await fetch("http://localhost:4865/messages", {
+              headers: {
+                "Content-Type": "application/json",
+              }
+            });
+
+            const data = await response.json()
             setLogs(data);
         } catch (error) {
             console.log("Erreur lors de la récupération des logs :", error);
@@ -18,8 +23,8 @@ const LogsPage = () => {
 
     const deleteLog = async (id) => {
         try {
-            await fetch(`http://localhost:4865/logs/${id}`, {
-                method: "DELETE",
+            await fetch(`http://localhost:4865/messages/${id}`, {
+                method: "DELETE"
             });
             setLogs(logs.filter((log) => log._id !== id));
         } catch (error) {
@@ -40,6 +45,7 @@ const LogsPage = () => {
           </li>
         ))}
       </ul>
+      <a href="http://localhost:5173/">La page des messages</a>
     </div>
   );
 };
